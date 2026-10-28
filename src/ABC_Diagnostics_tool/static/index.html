@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ABC Diagnostics Tool for Supporting AI-Based Essay Classification</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Custom styles used for this application -->
+    <link href="css/ABC-Diagnostics-tool.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary sticky-top border-bottom shadow-sm">
+      <div class="header-container container-fluid">
+        <span class="navbar-brand mb-0 ms-3 h1">
+         ABC Diagnostics Tool for Supporting AI-Based Essay Classification
+
+          <span id="navbarLoadingSpinner" class="spinner-border spinner-border-sm ms-1" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </span>
+        </span>
+        <div class="d-flex">
+          <div id="colorRangeContainer" class="d-none">
+            <p class="text-center my-0">Word importance</p>
+            <div id="colorLegend" class="my-2 d-flex justify-content-center"></div> <!--Color range from -1 to 1 by using d3js-->
+          </div>
+          <div class="d-flex gap-4 ms-4 m-2">
+            <div class="d-flex flex-column justify-content-center gap-2">
+              <div class="d-flex gap-3">
+                <button class="btn btn-sm p-0" data-bs-toggle="modal" data-bs-target="#infoModal" data-bs-content="about">
+                  <i class="bi bi-info-circle"></i> About
+                </button>
+                <button class="btn btn-sm p-0" data-bs-toggle="modal" data-bs-target="#infoModal" data-bs-content="help">
+                  <i class="bi bi-question-circle"></i> Help
+                </button>
+              </div>
+              <button class="btn btn-sm p-0" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                <i class="bi bi-gear"></i> Settings
+              </button>
+            </div>
+            
+            <div class="d-flex flex-column justify-content-center gap-2">
+              <button class="btn btn-sm p-0" data-bs-toggle="modal" data-bs-target="#downloadModal">
+                <i class="bi bi-file-earmark-arrow-down"></i> Download weights
+              </button>
+              <button class="btn btn-sm p-0" data-bs-toggle="modal" data-bs-target="#unhideModal">
+                <i class="bi bi-eye"></i> Unhide documents
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /.container-fluid -->
+    </nav>
+
+
+    <main class="container-fluid">
+    
+      <section id="mainRow" class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 my-2 overflow-x-auto">
+      </section><!-- /mainRow -->
+
+      <section id="footer">
+		    <hr class="my-1">
+	    		<p class="text-muted credit my-0">
+	    		</p>
+		    	<p id="footerVersion" class="text-muted credit my-0">
+					</p>
+      </section><!-- /footer -->
+
+    </main>
+
+    <!--  ------Modals------  -->
+    <!-- Modifications modal -->
+    <div id="modificationsModal" class="modal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modification Rules for Document #<span id="modificationsModalDocumentID"></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="modificationsModalBody" class="modal-body">
+            <div>
+              <label for="modificationsModalTextareaFrom" class="form-label">Specify word substitutions, separate with new line</label>
+              <div style="display: flex; gap: 10px;">
+                <textarea class="form-control" id="modificationsModalTextareaFrom" rows="8" aria-label="Document word substitution from rules" placeholder="from
+foo"></textarea>
+                <textarea class="form-control" id="modificationsModalTextareaTo" rows="8" aria-label="Document word substitution to rules" placeholder="too
+bar"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="modificationsModalConfirm" type="button" class="btn btn-primary">Save and apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About and Help modal -->
+    <div id="infoModal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-4" id="infoModalLabel">Title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unhide documents modal -->
+    <div id="unhideModal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-4" id="unhideModalLabel">Hidden documents</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul id="hiddenDocumentList" class="list-group mb-3 list-group-flush">
+              <li class="list-group-item d-flex justify-content-center">
+                There are no hidden documents.
+              </li>
+              <!--  Document List -->
+            </ul>
+            <div class="d-grid">
+              <button id="unhideAllButton" class="btn btn-success" disabled>
+                Unhide all documents
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download document weight modal -->
+    <div id="downloadModal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-4" id="downloadModalLabel">Download document weights</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul id="documentList" class="list-group mb-3 list-group-flush">
+              <li class="list-group-item d-flex justify-content-center">
+                There are no document weights to download yet.
+              </li>
+              <!-- Document List -->
+            </ul>
+            <div class="d-grid">
+              <button id="downloadSelectedBtn" class="btn btn-success" disabled>
+                Download Selected
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div id="settingsModal" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-4" id="settingsModal">Settings</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-grid gap-5">
+              <!-- Settings here -->
+              <div class="d-flex flex-row">
+                <div id="alignTokensSetting">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="onlyAlign">
+                    <label class="form-check-label" for="onlyAlign">
+                      Align tokens with only sequence-align
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="realignAll" checked>
+                    <label class="form-check-label" for="realignAll">
+                      Realign tokens after sequence-align and space where tokens don't match
+                    </label>
+                  </div>
+                </div>
+                <i class="bi bi-question-circle align-self-center ms-5"
+                  data-bs-toggle="tooltip" data-bs-placement="right"
+                  data-bs-custom-class="settings-tooltip fs-6"
+                  data-bs-title="Aligning tokens only using sequence-align will align tokens with needleman_wunsch, while realign all tokens matches tokens and inserts spaces where tokens do not align.">
+                </i>
+              </div>
+              <div>
+                <div class="fs-7 fst-italic text-info-emphasis pb-2">
+                  <i class="bi bi-exclamation-circle"></i> Changes to lookahead will not affect already processed documents
+                </div>
+                <div class="form-outline d-flex flex-row align-items-center gap-3">
+                  <label class="form-label mb-1" for="lookaheadInputSetting">Lookahead buffer for alignment</label>
+                  <input min="0" max="20" value="6" type="number" id="lookaheadInputSetting" class="form-control lookaheadInput"/>
+                  <p class="mb-0">(0 will look through the whole sequence)</p>
+                  <i class="bi bi-question-circle align-self-center ms-5"
+                    data-bs-toggle="tooltip" data-bs-placement="right"
+                    data-bs-custom-class="settings-tooltip fs-6"
+                    data-bs-title="Determines how many tokens the alignment method will look ahead in the corresponding array. The minimum value is 1 and the maximum is 20 (0 searches the entire corresponding array). Changes to the lookahead will not affect already processed documents.">
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Error overlay for modification modal-->
+    <div id="overlayAlert" class="alert alert-danger d-none overlay-alert" role="alert">
+      Placeholder error message.
+    </div>
+
+    <!--Bootstrap -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <!--D3js-->
+    <script src="js/d3.v7.min.js"></script>
+    
+    <!-- Custom JS code used for this application -->
+    <script src="js/ABC-Diagnostics-tool-data.js"></script>
+    <script src="js/ABC-Diagnostics-tool-document-panel.js"></script>
+    <script src="js/ABC-Diagnostics-tool-main.js"></script>
+    <script src="js/ABC-Diagnostics-tool-align-sentence-vis.js"></script>
+    <script src="js/ABC-Diagnostics-tool-help-about.js"></script>
+    <script src="js/ABC-Diagnostics-tool-download-and-unhide.js"></script>
+  </body>
+</html>

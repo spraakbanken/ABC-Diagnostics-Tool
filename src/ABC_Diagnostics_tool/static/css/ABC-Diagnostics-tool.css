@@ -1,0 +1,51 @@
+.word-class {
+  margin-left: 5px;
+}
+
+.special-char-class {
+  margin-right: 5px;
+  padding: 0px 2px;
+}
+
+.text-span-container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.overlay-alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100; /* show above all other elements */
+    width: auto;
+    min-width: 250px;
+    max-width: 80%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.tooltip-small .tooltip-inner {
+  font-size: 0.7rem;  
+  padding: 4px 8px;
+}
+
+.header-container {
+  flex-direction: row;
+  
+}
+
+@media (max-width: 1240px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.lookaheadInput{
+  width: 12%;
+}
+
+.settings-tooltip{
+  --bs-tooltip-max-width: 400px;
+}
