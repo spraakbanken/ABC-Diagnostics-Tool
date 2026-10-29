@@ -8,6 +8,8 @@ The application classifies text into CEFR grade levels (A1, A2, B1, B2, C1) usin
 
 **For further instructions on the use of the tool, see the manual page (based on the instructions available within the web interface)**: [manual.md](docs/manual.md)
 
+**Demo video**: [available as part of external supplementary material for the NLP4CALL 2026 paper](https://ivis.itn.liu.se/pubs/data/nlp4call26-munoz_sanchez/)
+
 
 
 ## Installation
