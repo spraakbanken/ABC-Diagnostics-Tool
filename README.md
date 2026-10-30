@@ -49,7 +49,7 @@ hf download rimusa/CEFR_essay_classification-swedish-cased
 
 ## Usage
  
-**Two** processes need to be launched at the moment (so you will probably need two terminal windows/tabs). Assuming the respective dependencies are met (e.g., using the virtual environment, as described above), navigate to the `ABC-Diagnostics-tool` directory. 
+**Two** processes need to be launched at the moment (so you will probably need two terminal windows/tabs). Assuming the respective dependencies are met (e.g., using the virtual environment, as described above), navigate to the `ABC-Diagnostics-Tool` directory. 
 
 **Remember to activate your virtual environment if needed**, e.g., `workon ABC-Diagnostics-env` or `conda activate ABC-Diagnostics-env`, for both terminal windows/tabs. 
 
@@ -58,7 +58,7 @@ For convenience, you may wish to launch two scripts (`run_01_model_api.sh` and `
  
 ### Usage - Local BERT model
 
-Remember to install the requirements, navigate to the `ABC-Diagnostics-tool` directory, and activate the virtual environment if needed (see above).
+Remember to install the requirements, navigate to the `ABC-Diagnostics-Tool` directory, and activate the virtual environment if needed (see above).
  
 Launch `flask` for the model API backend (`ABC_bert_model_api_dev`) in a way similar to the VSCode example below under 'Development' (`PYTHONDONTWRITEBYTECODE` prevents the creation of temporary bytecode `.pyc` files). For instance (for macOS or Unix-like systems):
  
@@ -94,12 +94,12 @@ Currently developed using VSCode. The Python interpreter is selected from the re
 
 ```
         {
-            "label": "Launch ABC-Diagnostics-tool web server",
+            "label": "Launch ABC-Diagnostics-Tool web server",
             "type": "shell",
             "command": "{the path to flask on your machine, e.g., /Users/username/.virtualenvs/ABC-Diagnostics-env/bin/flask} --app ABC_Diagnostics_tool.ABC_Diagnostics_tool_web_server --debug run --port 5100",
             "options": {
-                "cwd": "${workspaceFolder}/ABC-Diagnostics-tool/",
-                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-tool/src:${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
+                "cwd": "${workspaceFolder}/ABC-Diagnostics-Tool/",
+                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-Tool/src:${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
             },
             "isBackground": true,
             "problemMatcher": []
@@ -109,12 +109,12 @@ Currently developed using VSCode. The Python interpreter is selected from the re
 or using Conda environment:
 ```
         {
-            "label": "Launch ABC-Diagnostics-tool web server (Conda)",
+            "label": "Launch ABC-Diagnostics-Tool web server (Conda)",
             "type": "shell",
             "command": "conda activate ABC-Diagnostics-env && flask --app ABC_Diagnostics_tool.ABC_Diagnostics_tool_web_server --debug run --port 5100",
             "options": {
-                "cwd": "${workspaceFolder}/ABC-Diagnostics-tool/",
-                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-tool/src;${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
+                "cwd": "${workspaceFolder}/ABC-Diagnostics-Tool/",
+                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-Tool/src;${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
             },
             "isBackground": true,
             "problemMatcher": []
@@ -136,8 +136,8 @@ For the local simple API, the following entry in `tasks.json` is suggested for V
             "type": "shell",
             "command": "{the path to flask on your machine, e.g., /Users/username/.virtualenvs/ABC-Diagnostics-env/bin/flask} --app bert_model_dev.ABC_bert_model_api_dev --debug run --port 5101",
             "options": {
-                "cwd": "${workspaceFolder}/ABC-Diagnostics-tool/",
-                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-tool/src:${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
+                "cwd": "${workspaceFolder}/ABC-Diagnostics-Tool/",
+                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-Tool/src:${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
             },
             "isBackground": true,
             "problemMatcher": []
@@ -151,8 +151,8 @@ or using Conda environment:
             "type": "shell",
             "command": "conda activate ABC-Diagnostics-env && flask --app bert_model_dev.ABC_bert_model_api_dev --debug run --port 5101",
             "options": {
-                "cwd": "${workspaceFolder}/ABC-Diagnostics-tool/",
-                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-tool/src;${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
+                "cwd": "${workspaceFolder}/ABC-Diagnostics-Tool/",
+                "env": {"PYTHONPATH": "${workspaceFolder}/ABC-Diagnostics-Tool/src;${PYTHONPATH}", "PYTHONDONTWRITEBYTECODE": "1"}
             },
             "isBackground": true,
             "problemMatcher": []
