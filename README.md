@@ -169,7 +169,9 @@ curl --json '{"texts": ["The first text", "Alice och Bob skriver ett projekt om 
 
 ## Citation
 
-If you are using this software in your research, please cite *the upcoming NLP4CALL 2026 paper (to be updated)*.
+If you are using this software in your research, please cite the following paper:
+
+- Ricardo Muñoz Sánchez, Kostiantyn Kucher, Filip Kayar, and Elena Volodina. 2026. ABC Diagnostics: A Web-Based Tool for Explainable CEFR Classification. In *Proceedings of the 15th Workshop on Natural Language Processing for Computer Assisted Language Learning (NLP4CALL '26)*, pages 295–305, Gothenburg, Sweden. University of Tartu Library. [URL: https://aclanthology.org/2026.nlp4call-1.22/](https://aclanthology.org/2026.nlp4call-1.22/)
 
 
 ## Authors
